@@ -693,6 +693,15 @@
       border: 1px solid var(--sand);
       aspect-ratio: 16/10;
       position: relative;
+      background: var(--white);
+    }
+
+    .screen-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
     /* Mock screenshots using CSS art */
@@ -1358,194 +1367,41 @@
       <div class="section-label">Capturas de Tela</div>
       <h2 class="section-title">Veja o jogo em ação</h2>
     </div>
-    <div class="screen-tabs">
-    </div>
     <div class="screen-grid animate delay-1">
 
       <!-- Screenshot 1: Batalha -->
       <div class="screen-card">
-        <div class="mock m-battle">
-          <div class="mock-bar" style="background:#0d2b1e">
-            <div class="mock-dot" style="background:#ff5f57"></div>
-            <div class="mock-dot" style="background:#ffbd2e"></div>
-            <div class="mock-dot" style="background:#28c840"></div>
-          </div>
-          <div class="mock-body">
-            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">TROPICAL ·
-              BATALHA</div>
-            <div class="mock-em">🌪️</div>
-            <div class="mock-card">
-              <div style="color:#fff;font-weight:700;font-size:0.65rem;margin-bottom:2px;">Ciclone Tropical</div>
-              <div class="mock-line w80"></div>
-            </div>
-            <div class="mock-actions">
-              <div class="mock-btn"></div>
-              <div class="mock-btn active"></div>
-              <div class="mock-btn"></div>
-            </div>
-            <div style="display:flex;gap:6px;margin-top:4px;">
-              <div class="mock-line accent" style="width:50%;height:4px;border-radius:3px;"></div>
-              <div style="color:rgba(255,255,255,0.4);font-size:0.5rem;">❤️ 160 &nbsp; 💰 45</div>
-            </div>
-          </div>
-        </div>
+        <img src="./assets/fight.png" alt="Sistema de Batalha">
         <div class="screen-label">Sistema de Batalha</div>
       </div>
 
       <!-- Screenshot 2: Evento -->
       <div class="screen-card">
-        <div class="mock m-event">
-          <div class="mock-bar" style="background:#0f2d3b">
-            <div class="mock-dot" style="background:#ff5f57"></div>
-            <div class="mock-dot" style="background:#ffbd2e"></div>
-            <div class="mock-dot" style="background:#28c840"></div>
-          </div>
-          <div class="mock-body">
-            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">EVENTO ·
-              MONTANHA</div>
-            <div class="mock-em">🏔️</div>
-            <div class="mock-card">
-              <div style="color:#fff;font-weight:700;font-size:0.65rem;margin-bottom:3px;">Oráculo do Destino</div>
-              <div class="mock-line w80" style="margin-bottom:2px;"></div>
-              <div class="mock-line w60"></div>
-            </div>
-            <div class="mock-actions" style="flex-direction:column;gap:3px;">
-              <div class="mock-btn" style="height:10px;border-radius:3px;flex:none;"></div>
-              <div class="mock-btn active" style="height:10px;border-radius:3px;flex:none;"></div>
-            </div>
-          </div>
-        </div>
+        <img src="./assets/eventosNarrativos.png" alt="Eventos Narrativos">
         <div class="screen-label">Eventos Narrativos</div>
       </div>
 
       <!-- Screenshot 3: Classes -->
       <div class="screen-card">
-        <div class="mock m-class">
-          <div class="mock-bar" style="background:#1a1a2e">
-            <div class="mock-dot" style="background:#ff5f57"></div>
-            <div class="mock-dot" style="background:#ffbd2e"></div>
-            <div class="mock-dot" style="background:#28c840"></div>
-          </div>
-          <div class="mock-body">
-            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">ESCOLHA SUA
-              CLASSE</div>
-            <div style="display:flex;gap:4px;margin-top:3px;">
-              <div class="mock-card" style="flex:1;">
-                <div style="font-size:1rem;">⚔️</div>
-                <div style="color:#fff;font-size:0.55rem;font-weight:700;">Aventureiro</div>
-              </div>
-              <div class="mock-card active" style="flex:1;border-color:rgba(82,183,136,0.7);">
-                <div style="font-size:1rem;">📚</div>
-                <div style="color:#52B788;font-size:0.55rem;font-weight:700;">Estudioso</div>
-              </div>
-              <div class="mock-card" style="flex:1;">
-                <div style="font-size:1rem;">💰</div>
-                <div style="color:#fff;font-size:0.55rem;font-weight:700;">Comerciante</div>
-              </div>
-            </div>
-            <div class="mock-line w80" style="margin-top:4px;"></div>
-            <div class="mock-line w60"></div>
-            <div class="mock-btn active" style="height:10px;border-radius:99px;margin-top:4px;"></div>
-          </div>
-        </div>
+        <img src="./assets/escolhaClasse.png" alt="Seleção de Classe">
         <div class="screen-label">Seleção de Classe</div>
       </div>
 
       <!-- Screenshot 4: Quiz -->
       <div class="screen-card">
-        <div class="mock m-quiz">
-          <div class="mock-bar" style="background:#2d1b00">
-            <div class="mock-dot" style="background:#ff5f57"></div>
-            <div class="mock-dot" style="background:#ffbd2e"></div>
-            <div class="mock-dot" style="background:#28c840"></div>
-          </div>
-          <div class="mock-body">
-            <div style="font-size:0.55rem;color:#E9B44C;letter-spacing:0.15em;font-weight:700;">QUIZ FINAL · PERGUNTA
-              2/4</div>
-            <div
-              style="background:rgba(255,255,255,0.07);border-radius:5px;border:1px solid rgba(255,255,255,0.1);padding:5px;margin-top:3px;">
-              <div class="mock-line w80" style="background:rgba(255,255,255,0.3);margin-bottom:3px;"></div>
-              <div class="mock-line w60" style="background:rgba(255,255,255,0.15);"></div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:3px;margin-top:5px;">
-              <div class="mock-btn" style="height:9px;border-radius:3px;"></div>
-              <div class="mock-btn active"
-                style="height:9px;border-radius:3px;background:rgba(212,160,23,0.5);border-color:rgba(212,160,23,0.6);">
-              </div>
-              <div class="mock-btn" style="height:9px;border-radius:3px;"></div>
-              <div class="mock-btn" style="height:9px;border-radius:3px;"></div>
-            </div>
-          </div>
-        </div>
+        <img src="./assets/quizz.png" alt="Quiz de Conhecimento">
         <div class="screen-label">Quiz de Conhecimento</div>
       </div>
 
       <!-- Screenshot 5: Resultado -->
       <div class="screen-card">
-        <div class="mock m-result">
-          <div class="mock-bar" style="background:#0d2b1e">
-            <div class="mock-dot" style="background:#ff5f57"></div>
-            <div class="mock-dot" style="background:#ffbd2e"></div>
-            <div class="mock-dot" style="background:#28c840"></div>
-          </div>
-          <div class="mock-body" style="align-items:center;text-align:center;justify-content:center;gap:4px;">
-            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">SEU DESTINO
-              É...</div>
-            <div style="font-size:1.8rem;">🇵🇹</div>
-            <div style="color:#fff;font-weight:700;font-size:0.8rem;">Portugal</div>
-            <div
-              style="background:rgba(82,183,136,0.2);border:1px solid rgba(82,183,136,0.4);border-radius:99px;padding:2px 8px;font-size:0.6rem;color:#52B788;font-weight:700;">
-              87% compatível</div>
-            <div class="mock-line w60" style="margin-top:4px;"></div>
-            <div style="display:flex;gap:4px;justify-content:center;margin-top:2px;">
-              <div style="font-size:0.7rem;">🇯🇵</div>
-              <div style="font-size:0.7rem;">🇳🇿</div>
-              <div style="font-size:0.7rem;">🇪🇸</div>
-            </div>
-          </div>
-        </div>
+        <img src="./assets/resultado.png" alt="Resultado do Match">
         <div class="screen-label">Resultado do Match</div>
       </div>
 
       <!-- Screenshot 6: Glossário/Mapa -->
       <div class="screen-card">
-        <div class="mock m-map">
-          <div class="mock-bar" style="background:#14293d">
-            <div class="mock-dot" style="background:#ff5f57"></div>
-            <div class="mock-dot" style="background:#ffbd2e"></div>
-            <div class="mock-dot" style="background:#28c840"></div>
-          </div>
-          <div class="mock-body">
-            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">GLOSSÁRIO
-              DE FATOS</div>
-            <div style="display:flex;flex-direction:column;gap:3px;margin-top:3px;">
-              <div class="mock-card" style="display:flex;gap:4px;align-items:center;">
-                <div style="font-size:0.7rem;">🌀</div>
-                <div style="flex:1;">
-                  <div class="mock-line w80" style="background:rgba(255,255,255,0.25);margin-bottom:2px;"></div>
-                  <div class="mock-line w60" style="background:rgba(255,255,255,0.12);"></div>
-                </div>
-                <div class="mock-tag">CLIMA</div>
-              </div>
-              <div class="mock-card" style="display:flex;gap:4px;align-items:center;">
-                <div style="font-size:0.7rem;">🐊</div>
-                <div style="flex:1;">
-                  <div class="mock-line w80" style="background:rgba(255,255,255,0.25);margin-bottom:2px;"></div>
-                  <div class="mock-line w60" style="background:rgba(255,255,255,0.12);"></div>
-                </div>
-                <div class="mock-tag">FAUNA</div>
-              </div>
-              <div class="mock-card" style="display:flex;gap:4px;align-items:center;opacity:0.5;">
-                <div style="font-size:0.7rem;">🌋</div>
-                <div style="flex:1;">
-                  <div class="mock-line w80" style="background:rgba(255,255,255,0.15);margin-bottom:2px;"></div>
-                  <div class="mock-line w60" style="background:rgba(255,255,255,0.08);"></div>
-                </div>
-                <div class="mock-tag">GEO</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <img src="./assets/glossario.png" alt="Glossário de Fatos">
         <div class="screen-label">Glossário de Fatos</div>
       </div>
 
