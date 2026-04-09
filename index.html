@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geographic Life — Descubra onde você pertence</title>
+  <link rel="icon" type="image/x-icon" href="./public/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --forest: #1B4332;
+      --leaf: #2D6A4F;
+      --mint: #52B788;
+      --lime: #95D5B2;
+      --cream: #F8F4E9;
+      --sand: #EDE8D5;
+      --gold: #D4A017;
+      --amber: #E9B44C;
+      --rust: #C45C2E;
+      --charcoal: #1A1A2E;
+      --ink: #2C2C2C;
+      --muted: #5A6B64;
+      --white: #FFFFFF;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      background: rgba(27, 67, 50, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--lime);
+    }
+
+    .nav-cta {
+      background: var(--mint);
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.45rem 1.2rem;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .nav-cta:hover {
+      background: var(--lime);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--forest);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 5rem 5rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 75% 50%, rgba(82, 183, 136, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212, 160, 23, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(82, 183, 136, 0.15);
+      border: 1px solid rgba(82, 183, 136, 0.35);
+      border-radius: 99px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--lime);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge span {
+      width: 6px;
+      height: 6px;
+      background: var(--mint);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--mint);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--mint);
+      color: var(--forest);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(82, 183, 136, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--lime);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(82, 183, 136, 0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--lime);
+      color: var(--lime);
+      transform: translateY(-2px);
+    }
+
+    /* Hero visual: mock game window */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .game-window {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(82, 183, 136, 0.15);
+    }
+
+    .game-titlebar {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-r {
+      background: #ff5f57;
+    }
+
+    .dot-y {
+      background: #ffbd2e;
+    }
+
+    .dot-g {
+      background: #28c840;
+    }
+
+    .game-screen {
+      background: linear-gradient(160deg, #0d2b1e 0%, #1b4332 50%, #0a1f15 100%);
+      padding: 1.5rem;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gs-biome {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--mint);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .gs-scene {
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .gs-enemy-card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .gs-enemy-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .gs-enemy-desc {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .gs-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .gs-action {
+      flex: 1;
+      background: rgba(82, 183, 136, 0.15);
+      border: 1px solid rgba(82, 183, 136, 0.3);
+      border-radius: 8px;
+      padding: 0.5rem 0.25rem;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--mint);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .gs-action:hover {
+      background: rgba(82, 183, 136, 0.28);
+    }
+
+    .gs-action.active {
+      background: var(--mint);
+      color: var(--forest);
+    }
+
+    .gs-hud {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .gs-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+    }
+
+    .gs-stat-val {
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .gs-stat-lbl {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .gs-hp-bar {
+      flex: 1;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .gs-hp-fill {
+      height: 100%;
+      width: 65%;
+      background: var(--mint);
+      border-radius: 99px;
+    }
+
+    /* floating decorative biomes */
+    .float-biome {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0.25;
+      animation: floatBiome 6s ease-in-out infinite;
+    }
+
+    .fb1 {
+      top: 12%;
+      right: 8%;
+      animation-delay: 0s;
+    }
+
+    .fb2 {
+      bottom: 20%;
+      right: 5%;
+      animation-delay: 1.5s;
+    }
+
+    .fb3 {
+      top: 50%;
+      right: 2%;
+      animation-delay: 3s;
+    }
+
+    @keyframes floatBiome {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 6rem 5rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing: -0.03em;
+      color: var(--forest);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .pill {
+      background: var(--sand);
+      border-radius: 99px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--forest);
+    }
+
+    .about-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--sand);
+    }
+
+    .stat-card.dark {
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      letter-spacing: -0.04em;
+      color: var(--forest);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-card.dark .stat-num {
+      color: var(--mint);
+    }
+
+    .stat-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .stat-card.dark .stat-desc {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ── HOW TO PLAY ── */
+    .how {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .how .section-title {
+      color: var(--white);
+    }
+
+    .how .section-sub {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 1.75rem;
+      position: relative;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .step:hover {
+      border-color: rgba(82, 183, 136, 0.4);
+      background: rgba(82, 183, 136, 0.06);
+    }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--mint);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+
+    .step h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ── ODS ── */
+    .ods {
+      background: var(--sand);
+    }
+
+    .ods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .ods-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .ods-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(27, 67, 50, 0.1);
+    }
+
+    .ods-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .ods-badge.o4 {
+      background: #E63228;
+      color: #fff;
+    }
+
+    .ods-badge.o10 {
+      background: #DF1768;
+      color: #fff;
+    }
+
+    .ods-badge.o11 {
+      background: #FD9D24;
+      color: #fff;
+    }
+
+    .ods-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--forest);
+      margin-bottom: 0.6rem;
+    }
+
+    .ods-card p {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    /* ── SCREENSHOTS ── */
+    .screenshots {
+      background: var(--white);
+    }
+
+    .screen-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin: 2.5rem 0 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      background: var(--sand);
+      border: none;
+      border-radius: 99px;
+      padding: 0.45rem 1.1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tab.active,
+    .tab:hover {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .screen-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--sand);
+      aspect-ratio: 16/10;
+      position: relative;
+    }
+
+    /* Mock screenshots using CSS art */
+    .mock {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.6rem;
+    }
+
+    .mock-bar {
+      height: 22px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 4px;
+    }
+
+    .mock-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .mock-body {
+      flex: 1;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    /* Biome mocks */
+    .m-battle .mock-bar {
+      background: #0d2b1e;
+    }
+
+    .m-battle .mock-body {
+      background: linear-gradient(160deg, #0d2b1e 0%, #1b4332 100%);
+    }
+
+    .m-event .mock-bar {
+      background: #0f2d3b;
+    }
+
+    .m-event .mock-body {
+      background: linear-gradient(160deg, #0f2d3b 0%, #1a4a5e 100%);
+    }
+
+    .m-class .mock-bar {
+      background: #1a1a2e;
+    }
+
+    .m-class .mock-body {
+      background: linear-gradient(160deg, #1a1a2e 0%, #2d2d4e 100%);
+    }
+
+    .m-quiz .mock-bar {
+      background: #2d1b00;
+    }
+
+    .m-quiz .mock-body {
+      background: linear-gradient(160deg, #2d1b00 0%, #4a3000 100%);
+    }
+
+    .m-result .mock-bar {
+      background: #0d2b1e;
+    }
+
+    .m-result .mock-body {
+      background: linear-gradient(160deg, #0d2b1e 0%, #1b4332 100%);
+    }
+
+    .m-map .mock-bar {
+      background: #14293d;
+    }
+
+    .m-map .mock-body {
+      background: linear-gradient(160deg, #14293d 0%, #1f3f5c 100%);
+    }
+
+    .mock-em {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .mock-line {
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .mock-line.w80 {
+      width: 80%;
+    }
+
+    .mock-line.w60 {
+      width: 60%;
+    }
+
+    .mock-line.w40 {
+      width: 40%;
+    }
+
+    .mock-line.accent {
+      background: rgba(82, 183, 136, 0.5);
+    }
+
+    .mock-actions {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .mock-btn {
+      flex: 1;
+      height: 14px;
+      border-radius: 4px;
+      background: rgba(82, 183, 136, 0.25);
+      border: 1px solid rgba(82, 183, 136, 0.4);
+    }
+
+    .mock-btn.active {
+      background: rgba(82, 183, 136, 0.7);
+    }
+
+    .mock-card {
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px;
+    }
+
+    .mock-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      background: rgba(212, 160, 23, 0.35);
+      color: #E9B44C;
+    }
+
+    .screen-label {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 99px;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── CLASSES ── */
+    .classes {
+      background: var(--cream);
+    }
+
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .class-card {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--sand);
+      background: var(--white);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(27, 67, 50, 0.12);
+    }
+
+    .class-header {
+      padding: 1.5rem 1.5rem 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .class-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .ci-adv {
+      background: #FDECEA;
+    }
+
+    .ci-sch {
+      background: #E3F0FB;
+    }
+
+    .ci-mer {
+      background: #FAEEDA;
+    }
+
+    .class-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--forest);
+      margin-bottom: 0.2rem;
+    }
+
+    .class-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .class-stats {
+      border-top: 1px solid var(--sand);
+      padding: 1rem 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: var(--sand);
+      border-radius: 99px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .class-passive {
+      padding: 0.75rem 1.5rem 1.25rem;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .passive-label {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 0.35rem;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--forest);
+      text-align: center;
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(82, 183, 136, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-globe {
+      font-size: 4rem;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      padding: 2.5rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--mint);
+      text-decoration: none;
+    }
+
+    .footer-note {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .footer-ods {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .footer-ods-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .fo4 {
+      background: #E63228;
+    }
+
+    .fo10 {
+      background: #DF1768;
+    }
+
+    .fo11 {
+      background: #FD9D24;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      opacity: 0;
+    }
+
+    .animate.visible {
+      animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      section {
+        padding: 4rem 2rem;
+      }
+
+      nav {
+        padding: 0 1.5rem;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 7rem 2rem 4rem;
+        gap: 3rem;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .ods-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .classes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screen-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      footer {
+        padding: 2rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">🌍 Geographic Life</a>
+    <ul class="nav-links">
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#how">Como Jogar</a></li>
+      <li><a href="#ods">ODS</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+    </ul>
+    <a href="https://geographic-life.vercel.app/" class="nav-cta" target="_blank">Jogar agora →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="hero-badge animate delay-1"><span></span> Jogo Educativo Gratuito</div>
+      <h1 class="animate delay-2">Descubra onde<br><em>você pertence</em><br>no mundo.</h1>
+      <p class="animate delay-3">
+        Um RPG de exploração geográfica onde suas escolhas revelam o país
+        do mundo que mais combina com o seu estilo de vida.
+      </p>
+      <div class="hero-actions animate delay-4">
+        <a href="https://geographic-life.vercel.app/" class="btn-primary" target="_blank">▶ &nbsp;Jogar agora</a>
+        <a href="#how" class="btn-secondary">Como funciona</a>
+      </div>
+    </div>
+    <div class="hero-visual animate delay-3">
+      <div class="game-window">
+        <div class="game-titlebar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="game-screen">
+          <div class="gs-biome">Bioma · Floresta Tropical</div>
+          <div class="gs-scene">🌴🌊🐊</div>
+          <div class="gs-enemy-card">
+            <div class="gs-enemy-name">🐊 Crocodilo de Água Doce</div>
+            <div class="gs-enemy-desc">Um crocodilo enorme bloqueia a passagem pelo rio!</div>
+          </div>
+          <div class="gs-actions">
+            <div class="gs-action active">⚔️ Lutar</div>
+            <div class="gs-action">🤝 Negociar</div>
+            <div class="gs-action">🧠 Enganar</div>
+          </div>
+          <div class="gs-hud">
+            <div class="gs-stat">
+              <span class="gs-stat-val">❤️ 140</span>
+              <span class="gs-stat-lbl">hp</span>
+            </div>
+            <div class="gs-hp-bar">
+              <div class="gs-hp-fill"></div>
+            </div>
+            <div class="gs-stat">
+              <span class="gs-stat-val">💰 45</span>
+            </div>
+            <div class="gs-stat">
+              <span class="gs-stat-val">🧠 28</span>
+            </div>
+          </div>
+          <div class="float-biome fb1">🌿</div>
+          <div class="float-biome fb2">🦜</div>
+          <div class="float-biome fb3">💧</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="animate">
+      <div class="section-label">O Jogo</div>
+      <h2 class="section-title">Uma jornada que<br>ensina enquanto desafia</h2>
+      <p class="section-sub">
+        Geographic Life combina mecânicas de RPG com aprendizado real. Ao longo da aventura,
+        você enfrenta fenômenos climáticos, fauna selvagem e desafios culturais de 8 biomas
+        distintos — e acumula conhecimento que muda o resultado da sua jornada.
+      </p>
+      <div class="about-pills">
+        <span class="pill">🌴 8 Biomas</span>
+        <span class="pill">⚔️ RPG Tático</span>
+        <span class="pill">📚 Fatos Reais</span>
+        <span class="pill">🌍 Países Reais</span>
+        <span class="pill">🧠 Quiz Final</span>
+        <span class="pill">🆓 Gratuito</span>
+      </div>
+    </div>
+    <div class="about-visual animate delay-2">
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-num">57+</div>
+          <div class="stat-desc">Inimigos únicos com fatos educacionais reais</div>
+        </div>
+        <div class="stat-card dark">
+          <div class="stat-num">8</div>
+          <div class="stat-desc">Biomas para explorar — do ártico à selva urbana</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card dark">
+          <div class="stat-num">3</div>
+          <div class="stat-desc">Classes de jogo com estratégias completamente distintas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-desc">Combinações de resultado — cada run é única</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO PLAY -->
+  <section class="how" id="how">
+    <div class="animate">
+      <div class="section-label" style="color:var(--mint)">Como Jogar</div>
+      <h2 class="section-title">Seis passos para descobrir seu país</h2>
+      <p class="section-sub">Cada run é única. Suas escolhas moldam o resultado.</p>
+    </div>
+    <div class="steps">
+      <div class="step animate delay-1">
+        <div class="step-num">PASSO 01</div>
+        <div class="step-icon">🧙</div>
+        <h3>Escolha sua Classe</h3>
+        <p>Aventureiro, Estudioso ou Comerciante. Cada classe tem atributos e uma passiva que muda completamente a
+          estratégia.</p>
+      </div>
+      <div class="step animate delay-2">
+        <div class="step-num">PASSO 02</div>
+        <div class="step-icon">🗺️</div>
+        <h3>Explore Regiões</h3>
+        <p>Atravesse biomas como Floresta Tropical, Ártico, Deserto e Selva Urbana, cada um com seus próprios perigos.
+        </p>
+      </div>
+      <div class="step animate delay-3">
+        <div class="step-num">PASSO 03</div>
+        <div class="step-icon">⚔️</div>
+        <h3>Resolva Batalhas</h3>
+        <p>Enfrente inimigos usando Lutar, Negociar ou Enganar. Cada inimigo tem uma fraqueza — acertá-la reduz o dano
+          em 50%.</p>
+      </div>
+      <div class="step animate delay-1">
+        <div class="step-num">PASSO 04</div>
+        <div class="step-icon">🎲</div>
+        <h3>Tome Decisões</h3>
+        <p>Eventos narrativos revelam seus valores: prefere clima frio ou tropical? Natureza ou cidade? Cada escolha
+          conta.</p>
+      </div>
+      <div class="step animate delay-2">
+        <div class="step-num">PASSO 05</div>
+        <div class="step-icon">🧠</div>
+        <h3>Quiz Final</h3>
+        <p>Responda perguntas baseadas nos fatos que você coletou. Cada acerto aumenta sua porcentagem de
+          compatibilidade.</p>
+      </div>
+      <div class="step animate delay-3">
+        <div class="step-num">PASSO 06</div>
+        <div class="step-icon">🌍</div>
+        <h3>Descubra Seu País</h3>
+        <p>O algoritmo cruza todas as suas escolhas e apresenta o país do mundo que mais combina com seu perfil de vida.
+        </p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:3.5rem;" class="animate delay-2">
+      <a href="https://geographic-life.vercel.app/" class="btn-primary" target="_blank">▶ &nbsp;Começar minha
+        jornada</a>
+    </div>
+  </section>
+
+  <!-- ODS -->
+  <section class="ods" id="ods">
+    <div class="animate">
+      <div class="section-label">Objetivos de Desenvolvimento Sustentável</div>
+      <h2 class="section-title">Educação com propósito</h2>
+      <p class="section-sub">
+        Geographic Life foi desenvolvido para promover empatia global e consciência geográfica,
+        alinhado aos objetivos da Agenda 2030 da ONU.
+      </p>
+    </div>
+    <div class="ods-grid">
+      <div class="ods-card animate delay-1">
+        <div class="ods-badge o4">4</div>
+        <h3>Educação de Qualidade</h3>
+        <p>Cada inimigo derrotado e evento resolvido ensina um fato real sobre clima, fauna, cultura ou
+          sustentabilidade. O quiz final reforça o aprendizado de forma contextualizada e significativa.</p>
+      </div>
+      <div class="ods-card animate delay-2">
+        <div class="ods-badge o10">10</div>
+        <h3>Redução das Desigualdades</h3>
+        <p>Ao explorar biomas e culturas de todo o planeta, o jogador desenvolve empatia por realidades diferentes da
+          sua. O jogo questiona preconceitos e expande a visão de mundo de quem joga.</p>
+      </div>
+      <div class="ods-card animate delay-3">
+        <div class="ods-badge o11">11</div>
+        <h3>Cidades e Comunidades Sustentáveis</h3>
+        <p>Decisões sobre custo de vida, segurança e qualidade urbana moldam o resultado do match. O jogo educa sobre
+          mobilidade humana consciente e os desafios das comunidades ao redor do mundo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section class="screenshots" id="screenshots">
+    <div class="animate">
+      <div class="section-label">Capturas de Tela</div>
+      <h2 class="section-title">Veja o jogo em ação</h2>
+    </div>
+    <div class="screen-tabs">
+      <button class="tab active">Todos</button>
+      <button class="tab">Batalha</button>
+      <button class="tab">Eventos</button>
+      <button class="tab">Quiz</button>
+    </div>
+    <div class="screen-grid animate delay-1">
+
+      <!-- Screenshot 1: Batalha -->
+      <div class="screen-card">
+        <div class="mock m-battle">
+          <div class="mock-bar" style="background:#0d2b1e">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">TROPICAL ·
+              BATALHA</div>
+            <div class="mock-em">🌪️</div>
+            <div class="mock-card">
+              <div style="color:#fff;font-weight:700;font-size:0.65rem;margin-bottom:2px;">Ciclone Tropical</div>
+              <div class="mock-line w80"></div>
+            </div>
+            <div class="mock-actions">
+              <div class="mock-btn"></div>
+              <div class="mock-btn active"></div>
+              <div class="mock-btn"></div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:4px;">
+              <div class="mock-line accent" style="width:50%;height:4px;border-radius:3px;"></div>
+              <div style="color:rgba(255,255,255,0.4);font-size:0.5rem;">❤️ 160 &nbsp; 💰 45</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">Sistema de Batalha</div>
+      </div>
+
+      <!-- Screenshot 2: Evento -->
+      <div class="screen-card">
+        <div class="mock m-event">
+          <div class="mock-bar" style="background:#0f2d3b">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">EVENTO ·
+              MONTANHA</div>
+            <div class="mock-em">🏔️</div>
+            <div class="mock-card">
+              <div style="color:#fff;font-weight:700;font-size:0.65rem;margin-bottom:3px;">Oráculo do Destino</div>
+              <div class="mock-line w80" style="margin-bottom:2px;"></div>
+              <div class="mock-line w60"></div>
+            </div>
+            <div class="mock-actions" style="flex-direction:column;gap:3px;">
+              <div class="mock-btn" style="height:10px;border-radius:3px;flex:none;"></div>
+              <div class="mock-btn active" style="height:10px;border-radius:3px;flex:none;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">Eventos Narrativos</div>
+      </div>
+
+      <!-- Screenshot 3: Classes -->
+      <div class="screen-card">
+        <div class="mock m-class">
+          <div class="mock-bar" style="background:#1a1a2e">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">ESCOLHA SUA
+              CLASSE</div>
+            <div style="display:flex;gap:4px;margin-top:3px;">
+              <div class="mock-card" style="flex:1;">
+                <div style="font-size:1rem;">⚔️</div>
+                <div style="color:#fff;font-size:0.55rem;font-weight:700;">Aventureiro</div>
+              </div>
+              <div class="mock-card active" style="flex:1;border-color:rgba(82,183,136,0.7);">
+                <div style="font-size:1rem;">📚</div>
+                <div style="color:#52B788;font-size:0.55rem;font-weight:700;">Estudioso</div>
+              </div>
+              <div class="mock-card" style="flex:1;">
+                <div style="font-size:1rem;">💰</div>
+                <div style="color:#fff;font-size:0.55rem;font-weight:700;">Comerciante</div>
+              </div>
+            </div>
+            <div class="mock-line w80" style="margin-top:4px;"></div>
+            <div class="mock-line w60"></div>
+            <div class="mock-btn active" style="height:10px;border-radius:99px;margin-top:4px;"></div>
+          </div>
+        </div>
+        <div class="screen-label">Seleção de Classe</div>
+      </div>
+
+      <!-- Screenshot 4: Quiz -->
+      <div class="screen-card">
+        <div class="mock m-quiz">
+          <div class="mock-bar" style="background:#2d1b00">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:0.55rem;color:#E9B44C;letter-spacing:0.15em;font-weight:700;">QUIZ FINAL · PERGUNTA
+              2/4</div>
+            <div
+              style="background:rgba(255,255,255,0.07);border-radius:5px;border:1px solid rgba(255,255,255,0.1);padding:5px;margin-top:3px;">
+              <div class="mock-line w80" style="background:rgba(255,255,255,0.3);margin-bottom:3px;"></div>
+              <div class="mock-line w60" style="background:rgba(255,255,255,0.15);"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;margin-top:5px;">
+              <div class="mock-btn" style="height:9px;border-radius:3px;"></div>
+              <div class="mock-btn active"
+                style="height:9px;border-radius:3px;background:rgba(212,160,23,0.5);border-color:rgba(212,160,23,0.6);">
+              </div>
+              <div class="mock-btn" style="height:9px;border-radius:3px;"></div>
+              <div class="mock-btn" style="height:9px;border-radius:3px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">Quiz de Conhecimento</div>
+      </div>
+
+      <!-- Screenshot 5: Resultado -->
+      <div class="screen-card">
+        <div class="mock m-result">
+          <div class="mock-bar" style="background:#0d2b1e">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+          </div>
+          <div class="mock-body" style="align-items:center;text-align:center;justify-content:center;gap:4px;">
+            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">SEU DESTINO
+              É...</div>
+            <div style="font-size:1.8rem;">🇵🇹</div>
+            <div style="color:#fff;font-weight:700;font-size:0.8rem;">Portugal</div>
+            <div
+              style="background:rgba(82,183,136,0.2);border:1px solid rgba(82,183,136,0.4);border-radius:99px;padding:2px 8px;font-size:0.6rem;color:#52B788;font-weight:700;">
+              87% compatível</div>
+            <div class="mock-line w60" style="margin-top:4px;"></div>
+            <div style="display:flex;gap:4px;justify-content:center;margin-top:2px;">
+              <div style="font-size:0.7rem;">🇯🇵</div>
+              <div style="font-size:0.7rem;">🇳🇿</div>
+              <div style="font-size:0.7rem;">🇪🇸</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">Resultado do Match</div>
+      </div>
+
+      <!-- Screenshot 6: Glossário/Mapa -->
+      <div class="screen-card">
+        <div class="mock m-map">
+          <div class="mock-bar" style="background:#14293d">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c840"></div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:0.55rem;color:rgba(82,183,136,0.8);letter-spacing:0.15em;font-weight:700;">GLOSSÁRIO
+              DE FATOS</div>
+            <div style="display:flex;flex-direction:column;gap:3px;margin-top:3px;">
+              <div class="mock-card" style="display:flex;gap:4px;align-items:center;">
+                <div style="font-size:0.7rem;">🌀</div>
+                <div style="flex:1;">
+                  <div class="mock-line w80" style="background:rgba(255,255,255,0.25);margin-bottom:2px;"></div>
+                  <div class="mock-line w60" style="background:rgba(255,255,255,0.12);"></div>
+                </div>
+                <div class="mock-tag">CLIMA</div>
+              </div>
+              <div class="mock-card" style="display:flex;gap:4px;align-items:center;">
+                <div style="font-size:0.7rem;">🐊</div>
+                <div style="flex:1;">
+                  <div class="mock-line w80" style="background:rgba(255,255,255,0.25);margin-bottom:2px;"></div>
+                  <div class="mock-line w60" style="background:rgba(255,255,255,0.12);"></div>
+                </div>
+                <div class="mock-tag">FAUNA</div>
+              </div>
+              <div class="mock-card" style="display:flex;gap:4px;align-items:center;opacity:0.5;">
+                <div style="font-size:0.7rem;">🌋</div>
+                <div style="flex:1;">
+                  <div class="mock-line w80" style="background:rgba(255,255,255,0.15);margin-bottom:2px;"></div>
+                  <div class="mock-line w60" style="background:rgba(255,255,255,0.08);"></div>
+                </div>
+                <div class="mock-tag">GEO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">Glossário de Fatos</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLASSES -->
+  <section class="classes" id="classes">
+    <div class="animate">
+      <div class="section-label">Classes de Explorador</div>
+      <h2 class="section-title">Três formas de jogar</h2>
+      <p class="section-sub">Cada classe oferece uma experiência diferente. Qual estilo é o seu?</p>
+    </div>
+    <div class="classes-grid">
+      <div class="class-card animate delay-1">
+        <div class="class-header">
+          <div class="class-icon ci-adv">⚔️</div>
+          <div>
+            <div class="class-name">Aventureiro</div>
+            <div class="class-desc">Resistente e corajoso. Feito para quem quer explorar mais e lutar menos.</div>
+          </div>
+        </div>
+        <div class="class-stats">
+          <span class="stat-pill">❤️ 160/200 HP</span>
+          <span class="stat-pill">💰 30 Gold</span>
+          <span class="stat-pill">🧠 0 Know.</span>
+        </div>
+        <div class="class-passive">
+          <div class="passive-label">Passiva</div>
+          <div>Chance de encontro reduzida para 40%. Recompensas de batalha +30% em Gold e Knowledge.</div>
+        </div>
+      </div>
+      <div class="class-card animate delay-2">
+        <div class="class-header">
+          <div class="class-icon ci-sch">📚</div>
+          <div>
+            <div class="class-name">Estudioso</div>
+            <div class="class-desc">Metódico e atento. Aprende mais e tem vantagem decisiva no quiz final.</div>
+          </div>
+        </div>
+        <div class="class-stats">
+          <span class="stat-pill">❤️ 120/160 HP</span>
+          <span class="stat-pill">💰 35 Gold</span>
+          <span class="stat-pill">🧠 15 Know.</span>
+        </div>
+        <div class="class-passive">
+          <div class="passive-label">Passiva</div>
+          <div>Revelar fraqueza custa menos. Knowledge de eventos +15%. 1 segunda chance no quiz final.</div>
+        </div>
+      </div>
+      <div class="class-card animate delay-3">
+        <div class="class-header">
+          <div class="class-icon ci-mer">💰</div>
+          <div>
+            <div class="class-name">Comerciante</div>
+            <div class="class-desc">Rico e preparado. Flexibilidade máxima nas escolhas de eventos.</div>
+          </div>
+        </div>
+        <div class="class-stats">
+          <span class="stat-pill">❤️ 130/170 HP</span>
+          <span class="stat-pill">💰 80 Gold</span>
+          <span class="stat-pill">🛡️ 1 Escudo</span>
+        </div>
+        <div class="class-passive">
+          <div class="passive-label">Passiva</div>
+          <div>Opções que custam Gold ficam 30% mais baratas. Começa com 1 Escudo extra.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-globe animate">🌍</div>
+    <h2 class="animate delay-1">Pronto para descobrir<br>onde você pertence?</h2>
+    <p class="animate delay-2">Gratuito, no navegador, sem instalação. Sua jornada começa agora.</p>
+    <div class="cta-actions animate delay-3">
+      <a href="https://geographic-life.vercel.app/" class="btn-primary" target="_blank">▶ &nbsp;Jogar Geographic
+        Life</a>
+      <a href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO" class="btn-secondary" target="_blank">Ver no GitHub</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">🌍 Geographic Life</a>
+    <span class="footer-note">Jogo educativo desenvolvido com propósito — livre para jogar e aprender.</span>
+    <div class="footer-ods">
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-right:4px;">ODS</span>
+      <div class="footer-ods-badge fo4">4</div>
+      <div class="footer-ods-badge fo10">10</div>
+      <div class="footer-ods-badge fo11">11</div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+    // Tab filtering (visual only — screenshots are all inline)
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    // Smooth nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => {
+            a.style.color = a.getAttribute('href') === '#' + e.target.id
+              ? 'var(--lime)' : '';
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => navObs.observe(s));
+  </script>
+</body>
+
+</html>
